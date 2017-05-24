@@ -106,6 +106,24 @@ global abstract with sharing class AbstractSobjectWorkflow
     global abstract void executeAfter();
 
     /**
+     * @return the workflow name for use in locating the custom metadata
+     *         for the workflow implementation
+     */
+    global abstract String getClassName();
+
+    /**
+     * @return whether the custom metadata for this workflow indicates that
+     *         the workflow is active and may be evaluated
+     */
+    global Boolean isActive() {
+        return [
+            SELECT IsActive__c
+            FROM TriggerWorkflow__mdt
+            WHERE DeveloperName = :this.getClassName()
+        ].IsActive__c;
+    }
+
+    /**
      * TODO: Actually implement logic to detect and handle recursion.
      *
      * @return false by default, the workflow does not support recursion or

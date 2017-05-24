@@ -16,11 +16,18 @@
         <name>ApexTrigger</name>
     </types>
     <types>
+        <members>TriggerWorkflow__mdt.ApexTruthTrackDmlWorkflow</members>
+        <members>TriggerWorkflow__mdt.ApexTruthTrackTriggerWorkflow</members>
+        <name>CustomMetadata</name>
+    </types>
+    <types>
         <members>ApexTruth__c</members>
+        <members>TriggerWorkflow__mdt</members>
         <name>CustomObject</name>
     </types>
     <types>
         <members>ApexTruth__c-Apex Truth Layout</members>
+        <members>TriggerWorkflow__mdt-Trigger Workflow Layout</members>
         <name>Layout</name>
     </types>
     <types>

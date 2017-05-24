@@ -156,8 +156,10 @@ global with sharing class TriggerService {
 
             // Evaluate the workflow's entry criteria, then execute the workflow
             // if there are any qualifying records to process.
-            if (workflow.withContext(this.context).evaluate()) {
-                workflow.execute();
+            if (workflow.isActive()) {
+                if (workflow.withContext(this.context).evaluate()) {
+                    workflow.execute();
+                }
             }
         }
     }

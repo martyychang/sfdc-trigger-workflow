@@ -10,6 +10,16 @@
         <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Processed</fullName>
+        <description>Set Processed to TRUE</description>
+        <field>IsProcessed__c</field>
+        <literalValue>1</literalValue>
+        <name>Processed</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
     <rules>
         <fullName>Set Num Workflow Touches</fullName>
         <actions>
@@ -20,5 +30,20 @@
         <description>Increment the Num Workflow Touches counter</description>
         <formula>TRUE</formula>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set Processed</fullName>
+        <actions>
+            <name>Processed</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>ApexTruth__c.IsProcessed__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <description>Set Processed to TRUE to facilitate rerun detection</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
 </Workflow>

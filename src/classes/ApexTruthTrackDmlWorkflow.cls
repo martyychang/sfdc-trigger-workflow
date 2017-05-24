@@ -1,13 +1,14 @@
 global with sharing class ApexTruthTrackDmlWorkflow
         extends AbstractSobjectWorkflow {
 
-    global override void executeAfter(Sobject record) {
+    global override void executeAfter() {
         /* do nothing */
     }
 
-    global override void executeBefore(Sobject record) {
-        ApexTruth__c truth = (ApexTruth__c)record;
-        truth.NumberOfDmlOperations__c++;
+    global override void executeBefore() {
+        for (ApexTruth__c eachRecord : (List<ApexTruth__c>)this.records) {
+            eachRecord.NumberOfDmlOperations__c++;
+        }
     }
 
     /**
@@ -15,7 +16,6 @@ global with sharing class ApexTruthTrackDmlWorkflow
      * occurred.
      */
     global override Boolean qualify(Sobject newRecord, Sobject oldRecord) {
-        return (Trigger.isInsert || Trigger.isUpdate)
-                && !this.context.isRerun;
+        return Trigger.isInsert || Trigger.isUpdate;
     }
 }

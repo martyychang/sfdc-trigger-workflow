@@ -40,13 +40,20 @@ global abstract with sharing class AbstractSobjectWorkflow
      */
     global Boolean evaluate() {
 
+        // First check to see whether the workflow is in a rerun context.
+        // If the workflow is in a rerun context and the workflow does _not_
+        // support reruns, all records are automatically disqualified.
+        if (this.context.isRerun && !this.isRerunnable()) {
+            this.records.clear();
+        }
+
         // We make the assumption that the service is deployed in a
         // single-trigger pattern, where we should only ever be evaluating
         // records in the `before` context. In the `after` context, we can
         // then assume that we've already evaluated records and should
         // continue processing the records qualified in the `before` event
         // immediately preceding the `after` event.
-        if (Trigger.isBefore) {
+        else if (Trigger.isBefore) {
             if (Trigger.isUpdate) {
                 for (Sobject eachRecord : Trigger.new) {
                     if (this.qualify(eachRecord, Trigger.oldMap.get(eachRecord.Id))) {
@@ -81,37 +88,39 @@ global abstract with sharing class AbstractSobjectWorkflow
      */
     global void execute() {
         if (Trigger.isBefore) {
-            for (Sobject eachRecord : this.records) {
-                this.executeBefore(eachRecord);
-            }
+            this.executeBefore();
         }
         else if (Trigger.isAfter) {
-            for (Sobject eachRecord : this.records) {
-                this.executeAfter(eachRecord);
-            }
+            this.executeAfter();
         }
     }
 
     /**
      * Do something useful in the before context for a given record
-     *
-     * @param record
      */
-    global abstract void executeBefore(Sobject record);
+    global abstract void executeBefore();
 
     /**
      * Do something useful in the after context for a given record
-     *
-     * @param record
      */
-    global abstract void executeAfter(Sobject record);
+    global abstract void executeAfter();
 
     /**
+     * TODO: Actually implement logic to detect and handle recursion.
+     *
      * @return false by default, the workflow does not support recursion or
      *         should not be executed for records that have already been
      *         processed in a previous DML operation in the same transaction
      */
-    global Boolean isRecursive() {
+    global virtual Boolean isRecursive() {
+        return false;
+    }
+
+    /**
+     * @return false by default, the workflow should execute only when handling
+     *         the first set of `before` and `after` events.
+     */
+    global virtual Boolean isRerunnable() {
         return false;
     }
 

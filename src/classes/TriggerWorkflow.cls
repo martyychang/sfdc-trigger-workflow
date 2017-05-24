@@ -17,6 +17,13 @@ global interface TriggerWorkflow {
     Boolean isRecursive();
 
     /**
+     * @return whether the implementation allows actions to be executed
+     *         when the single trigger handles `before update` and
+     *         `after update` events fired as a result of a field update
+     */
+    Boolean isRerunnable();
+
+    /**
      * Apply a specific trigger context to this workflow, and return the
      * workflow in this new context for ease of chaining.
      *

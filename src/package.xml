@@ -16,8 +16,8 @@
         <name>ApexTrigger</name>
     </types>
     <types>
-        <members>TriggerWorkflow__mdt.ApexTruthTrackDmlWorkflow</members>
-        <members>TriggerWorkflow__mdt.ApexTruthTrackTriggerWorkflow</members>
+        <members>TriggerWorkflow.ApexTruthTrackDmlWorkflow</members>
+        <members>TriggerWorkflow.ApexTruthTrackTriggerWorkflow</members>
         <name>CustomMetadata</name>
     </types>
     <types>

@@ -6,18 +6,23 @@
         <members>ApexTruthTrackDmlWorkflowTest</members>
         <members>ApexTruthTrackTriggerWorkflow</members>
         <members>ApexTruthTrackTriggerWorkflowTest</members>
+        <members>CaseCommentDebugWorkflow</members>
+        <members>CaseCommentDebugWorkflowTest</members>
         <members>TriggerContext</members>
         <members>TriggerService</members>
         <members>TriggerWorkflow</members>
+        <members>TriggerWorkflowUtil</members>
         <name>ApexClass</name>
     </types>
     <types>
         <members>ApexTruthTrigger</members>
+        <members>CaseCommentWorkflowTrigger</members>
         <name>ApexTrigger</name>
     </types>
     <types>
         <members>TriggerWorkflow.ApexTruthTrackDmlWorkflow</members>
         <members>TriggerWorkflow.ApexTruthTrackTriggerWorkflow</members>
+        <members>TriggerWorkflow.CaseCommentDebugWorkflow</members>
         <name>CustomMetadata</name>
     </types>
     <types>

@@ -40,7 +40,7 @@ private class CaseCommentDebugWorkflowTest {
                 'Number of Case Comments');
     }
 
-    @isTest
+    @testSetup
     private static void setup() {
         
         // Create accounts

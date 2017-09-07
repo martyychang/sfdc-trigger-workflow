@@ -11,6 +11,7 @@
         <members>TriggerContext</members>
         <members>TriggerService</members>
         <members>TriggerWorkflow</members>
+        <members>TriggerWorkflowUtil</members>
         <name>ApexClass</name>
     </types>
     <types>
@@ -21,6 +22,7 @@
     <types>
         <members>TriggerWorkflow.ApexTruthTrackDmlWorkflow</members>
         <members>TriggerWorkflow.ApexTruthTrackTriggerWorkflow</members>
+        <members>TriggerWorkflow.CaseCommentDebugWorkflow</members>
         <name>CustomMetadata</name>
     </types>
     <types>

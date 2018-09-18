@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsProcessed__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>To support rerun detection in the Salesforce Trigger Workflow framework. This field should never be set manually by a user or an API. Instead it should only ever be set by the Set Processed workflow rule.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>To support rerun detection in the Salesforce Trigger Workflow framework</inlineHelpText>
+    <label>Processed</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

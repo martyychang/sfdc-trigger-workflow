@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsActive__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>Whether the workflow should be evaluated. This overrides any entry criteria or any code in the workflow implementation, and every workflow implementation must have a corresponding Trigger Workflow record.</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>Whether the workflow should be evaluated</inlineHelpText>
+    <label>Active</label>
+    <type>Checkbox</type>
+</CustomField>

@@ -9,5 +9,5 @@ trigger ApexTruthTrigger on ApexTruth__c (
             Schema.sobjectType.ApexTruth__c.getName());
 
     // Process all of the trigger workflows
-    service.process(service.getActiveWorkflows());
+    service.processActiveWorkflows();
 }

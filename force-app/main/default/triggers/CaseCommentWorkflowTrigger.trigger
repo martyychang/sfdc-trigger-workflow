@@ -15,5 +15,5 @@ trigger CaseCommentWorkflowTrigger on CaseComment (
             Schema.sobjectType.CaseComment.getName());
 
     // Process all of the trigger workflows
-    service.process(service.getActiveWorkflows());
+    service.processActiveWorkflows();
 }

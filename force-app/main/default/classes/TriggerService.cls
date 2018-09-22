@@ -193,6 +193,14 @@ global with sharing class TriggerService {
     }
 
     /**
+     * Convenience method for processing all active workflows instead of
+     * calling `process` with the results from `getActiveWorkflows`
+     */
+    global void processActiveWorkflows() {
+        this.process(this.getActiveWorkflows());
+    }
+
+    /**
      * Refresh the context for a service, specifically to note whether the
      * trigger is executing again as a result of a field update.
      */

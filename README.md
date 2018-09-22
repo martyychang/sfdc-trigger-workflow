@@ -14,9 +14,7 @@ Let's say you're creating your first trigger on the Account object, and you want
 
 ### One-time Account object setup
 
-1. Create an unchecked-by-default checkbox field _named_ `IsProcessed__c` on the Account object.
-2. Create and _activate_ a workflow rule on the Account object that always sets `IsProcessed__c` to TRUE.
-3. Create a single trigger on the Account object named `AccountTrigger` as shown below.
+Create a single trigger on the Account object named `AccountTrigger` as shown below.
 
 ```java
 trigger AccountTrigger on Account (
@@ -30,9 +28,7 @@ trigger AccountTrigger on Account (
             Schema.sobjectType.Account.getName());
 
     // Process all of the trigger workflows
-    service.process(new List<Type> {
-        /* This is where your trigger workflows go */
-    });
+    service.processActiveWorkflows();
 }
 ```
 
@@ -82,30 +78,6 @@ methods at a minimum must be overridden.
 * `qualify` defines the entry criteria
 
 It's fine to do nothing in either `executeBefore` or `executeAfter`, but the methods must be overridden. This has the benefit of showing the reader at a glance that something or nothing is supposed to happen in either the `before` or `after` contexts.
-
-### Add AccountCapitalizeWorkflow as a trigger workflow to process
-
-```java
-trigger AccountTrigger on Account (
-        before insert, after insert,
-        before update, after update,
-        before delete, after delete, after undelete) {
-
-    // For readability, get a handle on the TriggerService object
-    // for this Sobject type
-    TriggerService service = TriggerService.getInstance(
-            Schema.sobjectType.Account.getName());
-
-    // Process all of the trigger workflows
-    service.process(new List<Type> {
-        AccountCapitalizeWorkflow.class  // New!
-    });
-}
-```
-
-This is a single trigger that handles all trigger events. The service is object-specific, so `TriggerService.getInstance` is used to get the appropriate service for the Account object.
-
-The `process` method is called on the service to process an ordered list of workflows, where each workflow is added by its Apex type (i.e., class) via the `class` property.
 
 ### Define the trigger workflow for AccountCapitalizeWorkflow
 

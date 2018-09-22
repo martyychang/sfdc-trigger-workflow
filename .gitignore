@@ -1,3 +1,9 @@
+# Local convenience scripts
+.bin/
+
+# Metadata API inputs and outputs for transient operations
+.mdapi/
+
 # Salesforce DX
 .sfdx/
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SobjectName__c</fullName>
+    <description>The full API name of the object for which this workflow is executed. This is used primarily as a filter when querying metadata to look for active workflows.</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>The full API name (e.g., &quot;Account&quot;, &quot;SBQQ__Quote__c&quot;) of the object for which this workflow is executed</inlineHelpText>
+    <label>Object API Name</label>
+    <length>40</length>
+    <required>true</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

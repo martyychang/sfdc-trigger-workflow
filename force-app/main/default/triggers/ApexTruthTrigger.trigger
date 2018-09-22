@@ -9,8 +9,5 @@ trigger ApexTruthTrigger on ApexTruth__c (
             Schema.sobjectType.ApexTruth__c.getName());
 
     // Process all of the trigger workflows
-    service.process(new List<Type> {
-        ApexTruthTrackDmlWorkflow.class,
-        ApexTruthTrackTriggerWorkflow.class
-    });
+    service.process(service.getActiveWorkflows());
 }

@@ -34,6 +34,8 @@
  */
 global with sharing class TriggerService {
 
+    private List<TriggerWorkflow> activeWorkflows { get; set; }
+
     /**
      * Additional context for the trigger not provided natively
      */
@@ -47,6 +49,8 @@ global with sharing class TriggerService {
     private static final Map<String, TriggerService> servicesByName =
             new Map<String, TriggerService>();
 
+    private String sobjectName { get; set; }
+
     /**
      * The service-specfiic registry of invoked workflows, used to return
      * the same workflow for processing continuity when a workflow has
@@ -55,13 +59,36 @@ global with sharing class TriggerService {
      */
     private Map<String, TriggerWorkflow> workflowsByName { get; set; }
 
-    /**
-     * Default constructor whose main purpose is to initialize the registry
-     * of invoked workflows.
-     */
-    public TriggerService() {
+    global TriggerService(String sobjectName) {
+        this.sobjectName = sobjectName;
+        this.activeWorkflows = new List<TriggerWorkflow>();
+        
         this.context = new TriggerContext();
         this.workflowsByName = new Map<String, TriggerWorkflow>();
+    }
+
+    global List<TriggerWorkflow> getActiveWorkflows() {
+
+        // If there are no workflows cached, look for active ones
+        if (this.activeWorkflows.isEmpty()) {
+            for (TriggerWorkflow__mdt eachEntry : [
+                SELECT
+                    DeveloperName,
+                    Id
+                FROM TriggerWorkflow__mdt
+                WHERE
+                    SobjectName__c = :this.sobjectName AND
+                    IsActive__c = TRUE
+                ORDER BY
+                    Priority__c ASC
+            ]) {
+                this.activeWorkflows.add(
+                        this.getWorkflow(eachEntry.DeveloperName));
+            }
+        }
+
+        // Return the remembered, cached workflows
+        return this.activeWorkflows;
     }
 
     /**
@@ -79,7 +106,7 @@ global with sharing class TriggerService {
         // If no service has been initialized yet for the given Sobject,
         // first initialize and register the service.
         if (!servicesByName.containsKey(name)) {
-            servicesByName.put(name, new TriggerService());
+            servicesByName.put(name, new TriggerService(name));
         }
 
         // Update the context for the service
@@ -100,6 +127,10 @@ global with sharing class TriggerService {
 
         // Return the singleton service
         return service;
+    }
+
+    global TriggerWorkflow getWorkflow(String workflowName) {
+        return this.getWorkflow(workflowName, Type.forName(workflowName));
     }
 
     /**
@@ -125,14 +156,14 @@ global with sharing class TriggerService {
      *
      * @return the appropriate workflow for the given context
      */
-    global TriggerWorkflow getWorkflow(Type workflowType) {
+    global TriggerWorkflow getWorkflow(String workflowName, Type workflowType) {
 
         // We know that every time we hit a before context, a new workflow
         // object must be constructed. The only complication is that in the
         // after context, we need to check whether a workflow object has
         // already been constructed and should be returned.
         Boolean isRegistered =
-                this.workflowsByName.containsKey(workflowType.getName());
+                this.workflowsByName.containsKey(workflowName);
 
         if (Trigger.isBefore || !isRegistered) {
 
@@ -141,37 +172,22 @@ global with sharing class TriggerService {
                     (TriggerWorkflow)workflowType.newInstance();
 
             // Register the workflow
-            this.workflowsByName.put(workflowType.getName(), workflow);
+            this.workflowsByName.put(workflowName, workflow);
         }
 
         // Return the registered workflow
-        return this.workflowsByName.get(workflowType.getName());
+        return this.workflowsByName.get(workflowName);
     }
 
     /**
      * Given a list of TriggerWorkflow subclass types, perform the appropriate
      * workflow actions for each type, carefully managing interdependencies
      * and recursion considerations.
-     *
-     * @param workflowTypes
-     *.           A list of types, for example, as expected from 
-     *            LeadAssignWorkflow.class
      */
-    global void process(List<Type> workflowTypes) {
-        for (Type eachType : workflowTypes) {
-            
-            // Get the workfow, trusting the getter to return an appropriate
-            // workflow for the given context. Specifically, it'd be awesome
-            // to get one instance of the workflow for continuity of execution
-            // between the before context and the after context.
-            TriggerWorkflow workflow = this.getWorkflow(eachType);
-
-            // Evaluate the workflow's entry criteria, then execute the workflow
-            // if there are any qualifying records to process.
-            if (workflow.isActive()) {
-                if (workflow.withContext(this.context).evaluate()) {
-                    workflow.execute();
-                }
+    global void process(List<TriggerWorkflow> workflows) {
+        for (TriggerWorkflow eachWorkflow : workflows) {
+            if (eachWorkflow.withContext(this.context).evaluate()) {
+                eachWorkflow.execute();
             }
         }
     }

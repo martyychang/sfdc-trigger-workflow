@@ -60,14 +60,6 @@ public class AccountCapitalizeWorkflow extends AbstractSobjectWorkflow {
             eachAccount.Name = eachAccount.Name.toUpperCase();
         }
     }
-    
-    /**
-     * Used to check against custom metadata to see whether the workflow
-     * is active and should be evaluated.
-     */
-    public override String getClassName() {
-        return AccountCapitalizeWorkflow.class.getName();
-    }
 
     /**
      * This is where entry criteria are defined, similar to

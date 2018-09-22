@@ -12,14 +12,6 @@ global interface TriggerWorkflow {
     void execute();
 
     /**
-     * @return whether the implementation is active and should be evaluated.
-     *.        This should be integrated with the Trigger Workflow custom
-     *         metadata type for clicks-not-code control over which workflows
-     *         can be evaluated and executed and which ones cannot.
-     */
-    Boolean isActive();
-
-    /**
      * @return whether the implementation supports recursion or not
      */
     Boolean isRecursive();

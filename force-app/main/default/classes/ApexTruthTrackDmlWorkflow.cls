@@ -11,10 +11,6 @@ global with sharing class ApexTruthTrackDmlWorkflow
         }
     }
 
-    global override String getClassName() {
-        return ApexTruthTrackDmlWorkflow.class.getName();
-    }
-
     /**
      * Any time there's a DML operation we should be tracking that an operation
      * occurred.

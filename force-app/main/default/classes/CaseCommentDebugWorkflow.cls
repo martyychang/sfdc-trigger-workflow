@@ -14,10 +14,6 @@ public class CaseCommentDebugWorkflow extends AbstractSobjectWorkflow {
         System.debug('BEFORE');
     }
 
-    public override String getClassName() {
-        return CaseCommentDebugWorkflow.class.getName();
-    }
-
     public override Boolean qualify(Sobject newRecord, Sobject oldRecord) {
         return false;
     }

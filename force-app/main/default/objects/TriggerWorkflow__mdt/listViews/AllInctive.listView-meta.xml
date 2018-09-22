@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AllInctive</fullName>
+    <columns>DeveloperName</columns>
+    <columns>IsActive__c</columns>
+    <columns>SobjectName__c</columns>
+    <columns>Priority__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>IsActive__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <label>All Inactive</label>
+</ListView>

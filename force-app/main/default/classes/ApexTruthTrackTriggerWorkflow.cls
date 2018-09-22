@@ -11,10 +11,6 @@ global with sharing class ApexTruthTrackTriggerWorkflow
         }
     }
 
-    global override String getClassName() {
-        return ApexTruthTrackTriggerWorkflow.class.getName();
-    }
-
     global override Boolean isRerunnable() {
         return true;
     }

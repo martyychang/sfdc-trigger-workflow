@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Priority__c</fullName>
+    <defaultValue>100</defaultValue>
+    <description>The relative priority of a workflow in the context of other workflows for the same object. Multiple workflows may have the same priority if the order of operations is not important.</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>The relative priority of a workflow in the context of other workflows for the same object. Multiple workflows may have the same priority if the order of operations is not important.</inlineHelpText>
+    <label>Priority</label>
+    <precision>4</precision>
+    <required>true</required>
+    <scale>0</scale>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

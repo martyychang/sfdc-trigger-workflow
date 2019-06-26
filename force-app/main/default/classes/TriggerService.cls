@@ -101,7 +101,7 @@ global with sharing class TriggerService {
      *             Schema.sobjectType.ApexTruth__c.getName()
      * @return the TriggerService object for the given Sobject
      */
-    global static TriggerService getInstance(String name) {
+    global static TriggerService getInstance(String name, TriggerWorkflowContext context) {
         
         // If no service has been initialized yet for the given Sobject,
         // first initialize and register the service.
@@ -111,21 +111,13 @@ global with sharing class TriggerService {
 
         // Update the context for the service
         TriggerService service = servicesByName.get(name);
+        service.context = context;
 
-        // If the object supports rerun workflows, refresh the context if
-        // a rerun scenario is possible. Since delete operations cannot possibly
-        // cause a rerun, we only need to check for reruns for non-delete 
-        // DML operations. More specifically, reruns themselves manifest
-        // as update operations, so we only need to check whether the current
-        // DML context is `before update`..
-        if (Trigger.isBefore && Trigger.isUpdate) {
-            if (TriggerWorkflowUtil.isRerunSupported(
-                    Trigger.new[0].getSObjectType())) {
-                refreshContext(service);
-            }
+        if (service.context.isRerunEnabled()) {
+            refreshContext(service);
         }
 
-        // Return the singleton service
+        // Return the service
         return service;
     }
 
@@ -165,7 +157,7 @@ global with sharing class TriggerService {
         Boolean isRegistered =
                 this.workflowsByName.containsKey(workflowName);
 
-        if (Trigger.isBefore || !isRegistered) {
+        if (this.context.isBefore || !isRegistered) {
 
             // Initialize a new instance of the workflow
             TriggerWorkflow workflow =
@@ -210,7 +202,7 @@ global with sharing class TriggerService {
         Boolean rerun = false;
 
         // Check the records and unset `IsProcessed__c` if a rerun is detected
-        for (Sobject eachRecord : Trigger.new) {
+        for (Sobject eachRecord : service.context.newRecords) {
             if (eachRecord.get('IsProcessed__c') == true) {
                 rerun = true;
                 eachRecord.put('IsProcessed__c', false);

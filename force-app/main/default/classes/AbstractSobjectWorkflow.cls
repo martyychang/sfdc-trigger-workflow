@@ -53,23 +53,23 @@ global abstract with sharing class AbstractSobjectWorkflow
         // then assume that we've already evaluated records and should
         // continue processing the records qualified in the `before` event
         // immediately preceding the `after` event.
-        else if (Trigger.isBefore) {
-            if (Trigger.isUpdate) {
-                for (Sobject eachRecord : Trigger.new) {
-                    if (this.qualify(eachRecord, Trigger.oldMap.get(eachRecord.Id))) {
+        else if (this.context.isBefore) {
+            if (this.context.isUpdate) {
+                for (Sobject eachRecord : this.context.newRecords) {
+                    if (this.qualify(eachRecord, this.context.oldMap.get(eachRecord.Id))) {
                         this.records.add(eachRecord);
                     }
                 }
             }
-            else if (Trigger.isInsert || Trigger.isUndelete) {
-                for (Sobject eachRecord : Trigger.new) {
+            else if (this.context.isInsert || this.context.isUndelete) {
+                for (Sobject eachRecord : this.context.newRecords) {
                     if (this.qualify(eachRecord, null)) {
                         this.records.add(eachRecord);
                     }
                 }
             }
-            else if (Trigger.isDelete) {
-                for (Sobject eachRecord : Trigger.old) {
+            else if (this.context.isDelete) {
+                for (Sobject eachRecord : this.context.oldRecords) {
                     if (this.qualify(null, eachRecord)) {
                         this.records.add(eachRecord);
                     }
@@ -87,10 +87,10 @@ global abstract with sharing class AbstractSobjectWorkflow
      * performed in the before context when the record is still unlocked.
      */
     global void execute() {
-        if (Trigger.isBefore) {
+        if (this.context.isBefore) {
             this.executeBefore();
         }
-        else if (Trigger.isAfter) {
+        else if (this.context.isAfter) {
             this.executeAfter();
         }
     }

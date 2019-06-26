@@ -68,6 +68,13 @@ global with sharing class TriggerWorkflowContext {
                 .setOldMap(Trigger.oldMap);
     }
 
+    global Boolean isRerunEnabled() {
+        return this.isBefore && this.isUpdate
+                && TriggerWorkflowUtil.isRerunSupported(
+                    this.newRecords[0].getSObjectType()
+                );
+    }
+
     global TriggerWorkflowContext setAfter(Boolean value) {
         this.isAfter = value;
         return this;

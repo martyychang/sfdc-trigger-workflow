@@ -31,5 +31,5 @@ global interface TriggerWorkflow {
      *
      * @return the workflow with the new context applied
      */
-    TriggerWorkflow withContext(TriggerContext context);
+    TriggerWorkflow withContext(TriggerWorkflowContext context);
 }

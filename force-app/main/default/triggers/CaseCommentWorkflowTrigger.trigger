@@ -12,7 +12,9 @@ trigger CaseCommentWorkflowTrigger on CaseComment (
     // For readability, get a handle on the TriggerService object
     // for this Sobject type
     TriggerService service = TriggerService.getInstance(
-            Schema.sobjectType.CaseComment.getName());
+        Schema.sobjectType.CaseComment.getName(),
+        TriggerWorkflowContext.getInstance()
+    );
 
     // Process all of the trigger workflows
     service.processActiveWorkflows();

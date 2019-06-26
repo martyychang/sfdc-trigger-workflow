@@ -20,6 +20,6 @@ global with sharing class ApexTruthTrackTriggerWorkflow
      * occurred.
      */
     global override Boolean qualify(Sobject newRecord, Sobject oldRecord) {
-        return Trigger.isInsert || Trigger.isUpdate;
+        return this.context.isInsert || this.context.isUpdate;
     }
 }

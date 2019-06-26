@@ -25,7 +25,9 @@ trigger AccountTrigger on Account (
     // For readability, get a handle on the TriggerService object
     // for this Sobject type
     TriggerService service = TriggerService.getInstance(
-            Schema.sobjectType.Account.getName());
+        Schema.sobjectType.Account.getName(),
+        TriggerWorkflowContext.getInstance()
+    );
 
     // Process all of the trigger workflows
     service.processActiveWorkflows();
@@ -65,7 +67,7 @@ public class AccountCapitalizeWorkflow extends AbstractSobjectWorkflow {
         
         // We are indiscriminately capitalizing the name
         // of an account every time a record is inserted or updated.
-        return Trigger.isInsert || Trigger.isUpdate;
+        return this.context.isInsert || this.context.isUpdate;
     }
 }
 ```

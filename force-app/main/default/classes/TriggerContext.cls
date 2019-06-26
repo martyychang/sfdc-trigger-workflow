@@ -6,31 +6,31 @@
  */
 global with sharing class TriggerContext {
 
-    global Boolean isAfter { get; private set; }
+    global Boolean isAfter;
 
-    global Boolean isBefore { get; private set; }
+    global Boolean isBefore;
 
-    global Boolean isDelete { get; private set; }
+    global Boolean isDelete;
 
-    global Boolean isInsert { get; private set; }
+    global Boolean isInsert;
 
     /**
      * Whether the trigger is handling `before update` and `after update`
      * events that were fired as a result of a workflow field update.
      */
-    global Boolean isRerun { get; private set; }
+    global Boolean isRerun;
 
-    global Boolean isUndelete { get; private set; }
+    global Boolean isUndelete;
 
-    global Boolean isUpdate { get; private set; }
+    global Boolean isUpdate;
 
-    global List<SObject> oldRecords { get; private set; }
+    global List<SObject> oldRecords;
 
-    global Map<Id, SObject> oldMap { get; private set; }
+    global Map<Id, SObject> oldMap;
 
-    global List<SObject> newRecords { get; private set; }
+    global List<SObject> newRecords;
 
-    global Map<Id, SObject> newMap { get; private set; }
+    global Map<Id, SObject> newMap;
 
     /**
      * Default constructor, which assumes this context object is being

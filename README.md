@@ -25,7 +25,8 @@ trigger AccountTrigger on Account (
     // For readability, get a handle on the TriggerService object
     // for this Sobject type
     TriggerService service = TriggerService.getInstance(
-            Schema.sobjectType.Account.getName());
+        Schema.sobjectType.Account.getName()
+    ).setContext(TriggerWorkflowContext.getInstance());
 
     // Process all of the trigger workflows
     service.processActiveWorkflows();

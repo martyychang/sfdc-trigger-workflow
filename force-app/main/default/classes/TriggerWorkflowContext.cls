@@ -4,7 +4,7 @@
  * @see https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_triggers_context_variables.htm
  * @see https://salesforce.stackexchange.com/questions/159375/detecting-trigger-workflow-trigger
  */
-global with sharing class TriggerContext {
+global with sharing class TriggerWorkflowContext {
 
     global Boolean isAfter;
 
@@ -36,7 +36,7 @@ global with sharing class TriggerContext {
      * Default constructor, which assumes this context object is being
      * initialized in the very first `Trigger.isBefore` context.
      */
-    global TriggerContext() {
+    global TriggerWorkflowContext() {
         this.isRerun = false;
         this.isInsert = false;
         this.isUpdate = false;
@@ -51,11 +51,11 @@ global with sharing class TriggerContext {
     }
 
     /**
-     * @return a new instance of `TriggerContext` based on current `Trigger`
+     * @return a new instance of `TriggerWorkflowContext` based on current `Trigger`
      *         variables
      */
-    global static TriggerContext getInstance() {
-        return new TriggerContext()
+    global static TriggerWorkflowContext getInstance() {
+        return new TriggerWorkflowContext()
                 .setInsert(Trigger.isInsert)
                 .setUpdate(Trigger.isUpdate)
                 .setDelete(Trigger.isDelete)
@@ -68,57 +68,57 @@ global with sharing class TriggerContext {
                 .setOldMap(Trigger.oldMap);
     }
 
-    global TriggerContext setAfter(Boolean value) {
+    global TriggerWorkflowContext setAfter(Boolean value) {
         this.isAfter = value;
         return this;
     }
 
-    global TriggerContext setBefore(Boolean value) {
+    global TriggerWorkflowContext setBefore(Boolean value) {
         this.isBefore = value;
         return this;
     }
 
-    global TriggerContext setDelete(Boolean value) {
+    global TriggerWorkflowContext setDelete(Boolean value) {
         this.isDelete = value;
         return this;
     }
 
-    global TriggerContext setInsert(Boolean value) {
+    global TriggerWorkflowContext setInsert(Boolean value) {
         this.isInsert = value;
         return this;
     }
 
-    global TriggerContext setRerun(Boolean value) {
+    global TriggerWorkflowContext setRerun(Boolean value) {
         this.isRerun = value;
         return this;
     }
 
-    global TriggerContext setUndelete(Boolean value) {
+    global TriggerWorkflowContext setUndelete(Boolean value) {
         this.isUndelete = value;
         return this;
     }
 
-    global TriggerContext setUpdate(Boolean value) {
+    global TriggerWorkflowContext setUpdate(Boolean value) {
         this.isUpdate = value;
         return this;
     }
 
-    global TriggerContext setOld(List<SObject> value) {
+    global TriggerWorkflowContext setOld(List<SObject> value) {
         this.oldRecords = value;
         return this;
     }
 
-    global TriggerContext setOldMap(Map<Id, SObject> value) {
+    global TriggerWorkflowContext setOldMap(Map<Id, SObject> value) {
         this.oldMap = value;
         return this;
     }
 
-    global TriggerContext setNew(List<SObject> value) {
+    global TriggerWorkflowContext setNew(List<SObject> value) {
         this.newRecords = value;
         return this;
     }
 
-    global TriggerContext setNewMap(Map<Id, SObject> value) {
+    global TriggerWorkflowContext setNewMap(Map<Id, SObject> value) {
         this.newMap = value;
         return this;
     }

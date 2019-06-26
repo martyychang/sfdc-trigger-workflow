@@ -39,7 +39,7 @@ global with sharing class TriggerService {
     /**
      * Additional context for the trigger not provided natively
      */
-    private TriggerContext context { get; set; }
+    private TriggerWorkflowContext context { get; set; }
 
     /**
      * The static registry of trigger services that have been invoked
@@ -63,7 +63,7 @@ global with sharing class TriggerService {
         this.sobjectName = sobjectName;
         this.activeWorkflows = new List<TriggerWorkflow>();
         
-        this.context = new TriggerContext();
+        this.context = new TriggerWorkflowContext();
         this.workflowsByName = new Map<String, TriggerWorkflow>();
     }
 

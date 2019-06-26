@@ -4,7 +4,7 @@ global abstract with sharing class AbstractSobjectWorkflow
     /**
      * Additional context not provided natively
      */
-    protected TriggerContext context { get; set; }
+    protected TriggerWorkflowContext context { get; set; }
 
     /**
      * This is the list of qualifying records to be processed by the workflow.
@@ -150,7 +150,7 @@ global abstract with sharing class AbstractSobjectWorkflow
      *
      * @return the workflow with the new context applied
      */
-    global TriggerWorkflow withContext(TriggerContext context) {
+    global TriggerWorkflow withContext(TriggerWorkflowContext context) {
         this.context = context;
         return this;
     }

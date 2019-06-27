@@ -6,7 +6,7 @@ trigger ApexTruthTrigger on ApexTruth__c (
     // For readability, get a handle on the TriggerService object
     // for this Sobject type
     TriggerService service = TriggerService.getInstance(
-        Schema.sobjectType.ApexTruth__c.getName(),
+        Schema.sobjectType.ApexTruth__c.getLocalName(),
         TriggerWorkflowContext.getInstance()
     );
 

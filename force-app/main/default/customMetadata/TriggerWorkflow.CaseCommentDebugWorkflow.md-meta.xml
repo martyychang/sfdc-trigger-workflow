@@ -36,6 +36,6 @@
     </values>
     <values>
         <field>SobjectName__c</field>
-        <value xsi:type="xsd:string">ApexTruth__c</value>
+        <value xsi:type="xsd:string">CaseComment</value>
     </values>
 </CustomMetadata>

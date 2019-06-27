@@ -1,7 +1,7 @@
-public with sharing class TriggerWorkflowSelector
+global with sharing class TriggerWorkflowSelector
 extends AbstractSobjectSelector {
 
-    public static Schema.SObjectField getOnBeforeOrAfterField(
+    global static Schema.SObjectField getOnBeforeOrAfterField(
         TriggerWorkflowContext context
     ) {
         return context.isBefore
@@ -11,7 +11,7 @@ extends AbstractSobjectSelector {
                         : null;
     }
 
-    public static Schema.SObjectField getOnCrudField(
+    global static Schema.SObjectField getOnCrudField(
         TriggerWorkflowContext context
     ) {
         Schema.SObjectField field = null;
@@ -32,7 +32,7 @@ extends AbstractSobjectSelector {
         return field;
     }
 
-    public List<Schema.SObjectField> getSobjectFields() {
+    global List<Schema.SObjectField> getSobjectFields() {
         return new List<Schema.SObjectField> {
             TriggerWorkflow__mdt.DeveloperName,
             TriggerWorkflow__mdt.Id,
@@ -41,11 +41,15 @@ extends AbstractSobjectSelector {
         };
     }
 
-    public Schema.SObjectType getSobjectType() {
+    global Schema.SObjectType getSobjectType() {
         return TriggerWorkflow__mdt.sobjectType;
     }
 
-    public List<TriggerWorkflow__mdt> selectActiveBySobjectNameAndContext(
+    global static TriggerWorkflowSelector newInstance() {
+        return new TriggerWorkflowSelector();
+    }
+
+    global List<TriggerWorkflow__mdt> selectActiveBySobjectNameAndContext(
         String sobjectName,
         TriggerWorkflowContext context
     ) {

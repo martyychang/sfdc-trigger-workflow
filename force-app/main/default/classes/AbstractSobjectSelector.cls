@@ -19,6 +19,6 @@ public abstract class AbstractSobjectSelector {
     }
 
     protected List<SObject> execute(Soql.Query query) {
-        return this.jockey.query(query.toString());
+        return this.jockey.query(query.toSoql());
     }
 }

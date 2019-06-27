@@ -7,11 +7,35 @@
         <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
+        <field>IsOnAfter__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>IsOnBefore__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>IsOnDelete__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>IsOnInsert__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>IsOnUndelete__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>IsOnUpdate__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
         <field>Priority__c</field>
         <value xsi:type="xsd:double">100.0</value>
     </values>
     <values>
         <field>SobjectName__c</field>
-        <value xsi:type="xsd:string">ApexTruth__c</value>
+        <value xsi:type="xsd:string">CaseComment</value>
     </values>
 </CustomMetadata>

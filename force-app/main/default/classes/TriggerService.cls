@@ -41,6 +41,8 @@ global with sharing class TriggerService {
      */
     private TriggerWorkflowContext context { get; set; }
 
+    private TriggerWorkflowSelector selector;
+
     /**
      * The static registry of trigger services that have been invoked
      * in the current transaction, where the key for each service is
@@ -60,10 +62,23 @@ global with sharing class TriggerService {
     private Map<String, TriggerWorkflow> workflowsByName { get; set; }
 
     global TriggerService(String sobjectName) {
+        this(
+            sobjectName,
+            TriggerWorkflowContext.getInstance(),
+            TriggerWorkflowSelector.newInstance()
+        );
+    }
+
+    global TriggerService(
+        String sobjectName,
+        TriggerWorkflowContext context,
+        TriggerWorkflowSelector selector
+    ) {
         this.sobjectName = sobjectName;
+        this.context = context;
+        this.selector = selector;
+
         this.activeWorkflows = new List<TriggerWorkflow>();
-        
-        this.context = new TriggerWorkflowContext();
         this.workflowsByName = new Map<String, TriggerWorkflow>();
     }
 
@@ -71,19 +86,15 @@ global with sharing class TriggerService {
 
         // If there are no workflows cached, look for active ones
         if (this.activeWorkflows.isEmpty()) {
-            for (TriggerWorkflow__mdt eachEntry : [
-                SELECT
-                    DeveloperName,
-                    Id
-                FROM TriggerWorkflow__mdt
-                WHERE
-                    SobjectName__c = :this.sobjectName AND
-                    IsActive__c = TRUE
-                ORDER BY
-                    Priority__c ASC
-            ]) {
+            for (TriggerWorkflow__mdt eachEntry
+                    : this.selector.selectActiveBySobjectNameAndContext(
+                        this.sobjectName,
+                        this.context
+                    )
+            ) {
                 this.activeWorkflows.add(
-                        this.getWorkflow(eachEntry.DeveloperName));
+                    this.getWorkflow(eachEntry.DeveloperName)
+                );
             }
         }
 
@@ -101,7 +112,10 @@ global with sharing class TriggerService {
      *             Schema.sobjectType.ApexTruth__c.getName()
      * @return the TriggerService object for the given Sobject
      */
-    global static TriggerService getInstance(String name, TriggerWorkflowContext context) {
+    global static TriggerService getInstance(
+        String name,
+        TriggerWorkflowContext context
+    ) {
         
         // If no service has been initialized yet for the given Sobject,
         // first initialize and register the service.

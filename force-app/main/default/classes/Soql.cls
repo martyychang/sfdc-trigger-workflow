@@ -118,7 +118,9 @@ public with sharing class Soql {
                 new List<String> {
                     this.fieldDesc.getLocalName(),
                     EQUALS_OPERATOR,
-                    String.valueOf(this.value)
+                    this.value instanceof String
+                            ? inSingleQuotes((String)this.value)
+                            : String.valueOf(this.value)
                 },
                 Soql.SPACE_CHAR
             );
@@ -205,6 +207,37 @@ public with sharing class Soql {
         public Query expressWhere(ConditionExpression expr) {
             this.setWhereCondition(expr);
             return this;
+        }
+
+        public String getFromClause() {
+            return 'FROM ' + this.sobjectName;
+        }
+
+        public String getSelectClause() {
+            return 'SELECT ' + String.join(
+                this.fieldNames,
+                COMMA_CHAR + SPACE_CHAR
+            );
+        }
+
+        public String getWhereClause() {
+            return 'WHERE ' + this.whereCondition.toString();
+        }
+
+        public String toSoql() {
+
+            // Initialize the list of clauses
+            List<String> clauses = new List<String> {
+                this.getSelectClause(),
+                this.getFromClause()
+            };
+
+            // Add a WHERE clause if a condition exists
+            if (this.whereCondition != null) {
+                clauses.add(this.getWhereClause());
+            }
+
+            return String.join(clauses, SPACE_CHAR);
         }
 
         public void setWhereCondition(ConditionExpression value) {

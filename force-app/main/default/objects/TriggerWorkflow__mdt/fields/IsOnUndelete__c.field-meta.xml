@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsOnUndelete__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Whether the workflow should execute in "undelete" contexts</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>Whether the workflow should execute in "undelete" contexts</inlineHelpText>
+    <label>On Undelete</label>
+    <type>Checkbox</type>
+</CustomField>

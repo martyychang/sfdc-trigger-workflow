@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>AllInctive</fullName>
+    <fullName>AllInactive</fullName>
     <columns>DeveloperName</columns>
     <columns>IsActive__c</columns>
     <columns>SobjectName__c</columns>
     <columns>Priority__c</columns>
+    <columns>IsOnInsert__c</columns>
+    <columns>IsOnUpdate__c</columns>
+    <columns>IsOnDelete__c</columns>
+    <columns>IsOnBefore__c</columns>
+    <columns>IsOnAfter__c</columns>
+    <columns>IsOnUndelete__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>IsActive__c</field>
